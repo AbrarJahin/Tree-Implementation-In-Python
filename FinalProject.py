@@ -15,22 +15,19 @@ def getInputFromFile(inputFileNameInSameDir: str):
     return data
 
 def execute(selector: int, inputFileNameInSameDir: str):
-    selector = selector or 1
-    data = getInputFromFile(inputFileNameInSameDir or "input1.txt")
+    selector, data, dataStructure = selector or 3, getInputFromFile(inputFileNameInSameDir or "input1.txt"), None
     if selector==0: #HashTable
         dataStructure = HashTable()
-        executeWithData(dataStructure, data)
-        print(dataStructure)
     elif selector == 1: #BST
         dataStructure = BST()
-        executeWithData(dataStructure, data)
-        print(dataStructure)
     elif selector == 2: #SplayTree
         print('SplayTree')
     elif selector == 3: #SkipList
         print("SkipList")
     elif selector == 4: #RBTree
         print("RBTree")
+    executeWithData(dataStructure, data)
+    print(dataStructure)
 
 def executeWithData(modelObject, data):
     for (choice, key) in data:

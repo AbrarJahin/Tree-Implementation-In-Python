@@ -24,6 +24,9 @@
     <Compile Include="BST.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SkipNode.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TreeNode.py">
       <SubType>Code</SubType>
     </Compile>
