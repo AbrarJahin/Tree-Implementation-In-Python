@@ -1,7 +1,7 @@
 import sys          #For Command Line Argument
 import io           #Read File
 from HashTable import HashTable
-import BST
+from BST import BST
 import SplayTree
 import SkipList
 import RBTree
@@ -11,7 +11,7 @@ def getInputFromFile(inputFileNameInSameDir: str):
     with open(inputFileNameInSameDir) as f:
         for line in [line.rstrip() for line in f]:
             splittedData = line.replace('\t', ' ').split(" ", 1)
-            data.append((int(splittedData[0]), splittedData[1].strip())) 
+            data.append((int(splittedData[0]), splittedData[1].strip()))
     return data
 
 def execute(selector: int, inputFileNameInSameDir: str):
@@ -22,12 +22,14 @@ def execute(selector: int, inputFileNameInSameDir: str):
         executeWithData(dataStructure, data)
         print(dataStructure)
     elif selector == 1: #BST
-        print('BST')
-    elif selector == 2: #BST
+        dataStructure = BST()
+        executeWithData(dataStructure, data)
+        print(dataStructure)
+    elif selector == 2: #SplayTree
         print('SplayTree')
-    elif selector == 3: #BST
+    elif selector == 3: #SkipList
         print("SkipList")
-    elif selector == 4: #BST
+    elif selector == 4: #RBTree
         print("RBTree")
 
 def executeWithData(modelObject, data):
