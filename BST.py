@@ -56,3 +56,4 @@ class BST:
             swapNode = self.findMinNode(root.right)
             root.val = swapNode.val
             root.right = self.delete(swapNode.val, root.right)
+        return root
