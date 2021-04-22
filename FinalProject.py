@@ -15,7 +15,7 @@ def getInputFromFile(inputFileNameInSameDir: str):
     return data
 
 def execute(selector: int, inputFileNameInSameDir: str):
-    selector = selector or 0
+    selector = selector or 1
     data = getInputFromFile(inputFileNameInSameDir or "input1.txt")
     if selector==0: #HashTable
         dataStructure = HashTable()
@@ -37,10 +37,10 @@ def executeWithData(modelObject, data):
         if choice == 0:#delete
             modelObject.delete(key)
         elif choice == 1:
-            if modelObject.isKeyExist(key):    # Search if exist
-                print("Searched and found key - " + key)
-            else:                       # Not found, so insert the data
+            if not modelObject.isKeyExist(key):    # Search if exist
                 modelObject.insert(key)
+            else:                       # Not found, so insert the data
+                print("Searched and found key - " + key)
 
 def main():
     if len(sys.argv)>1:

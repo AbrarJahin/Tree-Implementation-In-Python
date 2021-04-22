@@ -19,10 +19,10 @@ class HashTable:
         return currentVal % self.maxSize
 
     def isKeyExist(self, key: str) -> bool:
-        return self.hashData[self.getHashValue(key)] is not None
+        return self.search(key) is not None
 
     def search(self, key: str) -> bool:
-        return self.hashData[key]
+        return self.hashData[self.getHashValue(key)]
 
     def insert(self, key: str) -> str:
         if self.isKeyExist(key):
