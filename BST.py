@@ -10,7 +10,7 @@ class BST:
         return "TreeNode"
 
     def __str__(self) -> str:
-        return root
+        return str(self.root)
 
     def isKeyExist(self, key: str) -> bool:
         return self.search(key) is not None
@@ -30,8 +30,7 @@ class BST:
                 return self.root
             else: root = self.root
         if not root:
-            root = TreeNode()
-            root.val = key
+            root = TreeNode(key)
         elif key < root.val:
             root.left = self.insert(key, root.left)
         elif key > root.val:
