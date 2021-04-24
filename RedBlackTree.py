@@ -13,7 +13,7 @@ class RedBlackTree():
 	def search(self, key: str) -> RBTreeNode:
 		return self.searchTreeHelper(self.root, key)
 	def searchTreeHelper(self, node: RBTreeNode, key: str) -> RBTreeNode:
-		if node == TNULL or key == node.val: return node
+		if node == self.TRootNull or key == node.val: return node
 		elif key < node.val: return self.searchTreeHelper(node.left, key)
 		else: return self.searchTreeHelper(node.right, key)
 
@@ -197,36 +197,3 @@ class RedBlackTree():
 		else: x.parent.left = y
 		y.right = x
 		x.parent = y
-
-####################################################################
-	# Printing the tree
-	def printTree(self):
-		self.printHelper(self.root, "", True)
-	def printHelper(self, node, indent, last):
-		if node != self.TRootNull:
-			sys.stdout.write(indent)
-			if last:
-				sys.stdout.write("R----")
-				indent += "     "
-			else:
-				sys.stdout.write("L----")
-				indent += "|    "
-			s_color = "RED" if node.color == Color.RED else "BLACK"
-			print(str(node.val) + "(" + s_color + ")")
-			self.printHelper(node.left, indent, False)
-			self.printHelper(node.right, indent, True)
-
-if __name__ == "__main__":
-	bst = RedBlackTree()
-	bst.insert(55)
-	bst.insert(40)
-	bst.insert(65)
-	bst.insert(60)
-	bst.insert(75)
-	bst.insert(57)
-
-	bst.printTree()
-
-	print("\nAfter deleting an element")
-	bst.delete(40)
-	bst.printTree()
