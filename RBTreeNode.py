@@ -10,3 +10,9 @@ class RBTreeNode(TreeNode):
         TreeNode.__init__(self, val, left, right)
         self.color = Color.BLACK
         self.parent = nodeParent
+
+    def __repr__(self) -> str:
+        return "RBTreeNode Class"
+
+    def __str__(self) -> str:
+        return str(self.val) + "[" + str(self.left) + ", " + str(self.right) + "]"
