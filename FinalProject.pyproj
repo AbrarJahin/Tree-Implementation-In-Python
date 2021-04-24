@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>59d46090-e5cd-4f73-b331-d44cd058630c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>FinalProject.py</StartupFile>
+    <StartupFile>RBTree_Old.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,7 @@
     <Compile Include="BST.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RBTree.py" />
     <Compile Include="RBTreeNode.py">
       <SubType>Code</SubType>
     </Compile>
@@ -37,7 +38,7 @@
     <Compile Include="HashTable.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RBTree.py">
+    <Compile Include="RBTree_Old.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SkipList.py">
