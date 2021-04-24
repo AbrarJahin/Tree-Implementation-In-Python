@@ -211,7 +211,6 @@ class RedBlackTree():
 			else:
 				sys.stdout.write("L----")
 				indent += "|    "
-
 			s_color = "RED" if node.color == Color.RED else "BLACK"
 			print(str(node.val) + "(" + s_color + ")")
 			self.printHelper(node.left, indent, False)
