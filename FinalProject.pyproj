@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>59d46090-e5cd-4f73-b331-d44cd058630c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>RBTree_Old.py</StartupFile>
+    <StartupFile>RBTree.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
