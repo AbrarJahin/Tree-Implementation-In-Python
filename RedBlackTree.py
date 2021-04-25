@@ -3,7 +3,7 @@ from RBTreeNode import RBTreeNode, Color
 
 class RedBlackTree():
 	def __init__(self):
-		self.TRootNull = RBTreeNode(0)
+		self.TRootNull = RBTreeNode("Default Value that can't be given")
 		self.TRootNull.color = Color.BLACK
 		self.TRootNull.left = None
 		self.TRootNull.right = None
@@ -13,9 +13,12 @@ class RedBlackTree():
 	def search(self, key: str) -> RBTreeNode:
 		return self.searchTreeHelper(self.root, key)
 	def searchTreeHelper(self, node: RBTreeNode, key: str) -> RBTreeNode:
-		if node == self.TRootNull or key == node.val: return node
-		elif key < node.val: return self.searchTreeHelper(node.left, key)
-		else: return self.searchTreeHelper(node.right, key)
+		if node == self.TRootNull or key == node.val:
+			return node if node.val==key else None
+		elif key < node.val:
+			return self.searchTreeHelper(node.left, key)
+		else:
+			return self.searchTreeHelper(node.right, key)
 
 	def isKeyExist(self, key: str) -> bool:
 		return self.search(key) is not None
