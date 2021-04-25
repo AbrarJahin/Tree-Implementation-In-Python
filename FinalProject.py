@@ -3,7 +3,7 @@ import io           #Read File
 import time
 from HashTable import HashTable
 from BST import BST
-import SplayTree
+from SplayTree import SplayTree
 from SkipList import SkipList
 from RedBlackTree import RedBlackTree
 
