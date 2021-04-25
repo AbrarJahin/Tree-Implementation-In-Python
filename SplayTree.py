@@ -1,156 +1,286 @@
-#class SplayTree:
-#	def __init__(self, height = 0, elem = None):
-#		self.val = elem
-#		self.next = [None]*height
-
-from random import shuffle
+import sys
 from TreeNode import TreeNode
-import time
 
-class BinaryTree:
-	"""A basic binary tree."""
+class SplayNode(TreeNode):
+	def  __init__(self, data, left = None, right = None):
+		TreeNode.__init__(self, data, left, right)
+		self.parent = None
+
+class SplayTree:
 	def __init__(self):
 		self.root = None
 
-	def insert(self, val, parent=None):
-		"""Insert a new value in the tree. Takes one argument
-		(the value to insert). Recursive binary search."""
-		if (parent == None): parent = self.root
-		if (parent == None):
-			# root is null, make this the new root, done
-			self.root = TreeNode(val)
+	def __print_helper(self, currPtr, indent, last):
+		# print the tree structure on the screen
+		if currPtr != None:
+			sys.stdout.write(indent)
+			if last:
+			  	sys.stdout.write("R----")
+			  	indent += "     "
+			else:
+				sys.stdout.write("L----")
+				indent += "|    "
+
+			print(currPtr.val)
+
+			self.__print_helper(currPtr.left, indent, False)
+			self.__print_helper(currPtr.right, indent, True)
+	
+	def searchTreeHelper(self, node, key):
+		if node == None or key == node.val:
+			return node
+
+		if key < node.val:
+			return self.searchTreeHelper(node.left, key)
+		return self.searchTreeHelper(node.right, key)
+
+	def deleteNodeHelper(self, node, key):
+		x = None
+		t = None 
+		s = None
+		while node != None:
+			if node.val == key:
+				x = node
+
+			if node.val <= key:
+				node = node.right
+			else:
+				node = node.left
+
+		if x == None:
+			print("Couldn't find key in the tree")
 			return
-		elif (val < parent.val):
-			if (parent.left == None):
-				# insert to the left of the parent
-				parent.left = TreeNode(val)
-				return
-			else:
-				# search under the left
-				self.insert(val, parent.left)
+		
+		# split operation
+		self.__splay(x)
+		if x.right != None:
+			t = x.right
+			t.parent = None
 		else:
-			if (parent.right == None):
-				# insert to the right of the parent
-				parent.right = TreeNode(val)
-				return
-			else:
-				# search under the right
-				self.insert(val, parent.right)
+			t = None
 
-	def search(self, val, node=None):
-		"""Find if a value is in the tree. Takes one argument
-		(the value to find). If the value is in the tree, returns
-		the node object. Otherwise returns None."""
-		if (node == None):
-			node = self.root
-		if (node == None):
-			# obviously it's not in an empty tree
-			return None
-		elif (val == node.val):
-			return node
-		elif (val < node.val):
-			# Search left
-			if (node.left != None):
-				leftrv = self.search(val, node.left)
-				if leftrv != None:
-					return leftrv
-		elif (val > node.val):
-			if (node.right != None):
-				rightrv = self.search(val, node.right)
-				if rightrv != None:
-					return rightrv
-		return None
+		s = x
+		s.right = None
+		x = None
 
-class SplayTree(BinaryTree):
-	def search(self, val, node=None, p=None, g=None, gg=None):
-		if (node == None): node = self.root
-		if (node == None): return None
-		elif (val == node.val): # If it's found, we need to move things around
-			
-			if (p != None):
-				if (g == None):
-					# Zig: swap node with its parent
-					self.rotateUp(node, p, g)
-				elif ((g.left == p and p.left == node) or
-					  (g.right == p and p.right == node)):
-					# Zig-zig: swap parent with grandparent
-					self.rotateUp(p, g, gg)
-					# Then swap node with parent
-					self.rotateUp(node, p, gg)
+		# join operation
+		if s.left != None:
+			s.left.parent = None
+
+		self.root = self.__join(s.left, t)
+		s = None
+
+	# rotate left at node x
+	def leftRotate(self, x):
+		y = x.right
+		x.right = y.left
+		if y.left != None:
+			y.left.parent = x
+
+		y.parent = x.parent
+		if x.parent == None:
+			self.root = y
+		elif x == x.parent.left:
+			x.parent.left = y
+		else:
+			x.parent.right = y
+		y.left = x
+		x.parent = y
+
+	# rotate right at node x
+	def __right_rotate(self, x):
+		y = x.left
+		x.left = y.right
+		if y.right != None:
+			y.right.parent = x
+		
+		y.parent = x.parent;
+		if x.parent == None:
+			self.root = y
+		elif x == x.parent.right:
+			x.parent.right = y
+		else:
+			x.parent.left = y
+		
+		y.right = x
+		x.parent = y
+
+	# Splaying operation. It moves x to the root of the tree
+	def __splay(self, x):
+		while x.parent != None:
+			if x.parent.parent == None:
+				if x == x.parent.left:
+					# zig rotation
+					self.__right_rotate(x.parent)
 				else:
-					# Zig-zag: swap node with parent
-					self.rotateUp(node, p, g)
-					# Then swap node with grandparent
-					self.rotateUp(node, g, gg)
-			return node
-		elif (val < node.val):
-			# Search left
-			if (node.left != None):
-				leftrv = self.search(val, node.left, node, p, g)
-				if leftrv != None:
-					return leftrv
-		elif (val > node.val):
-			if (node.right != None):
-				rightrv = self.search(val, node.right, node, p, g)
-				if rightrv != None:
-					return rightrv
-		return None
+					# zag rotation
+					self.leftRotate(x.parent)
+			elif x == x.parent.left and x.parent == x.parent.parent.left:
+				# zig-zig rotation
+				self.__right_rotate(x.parent.parent)
+				self.__right_rotate(x.parent)
+			elif x == x.parent.right and x.parent == x.parent.parent.right:
+				# zag-zag rotation
+				self.leftRotate(x.parent.parent)
+				self.leftRotate(x.parent)
+			elif x == x.parent.right and x.parent == x.parent.parent.left:
+				# zig-zag rotation
+				self.leftRotate(x.parent)
+				self.__right_rotate(x.parent)
+			else:
+				# zag-zig rotation
+				self.__right_rotate(x.parent)
+				self.leftRotate(x.parent)
 
-	def rotateUp(self, node, parent, gp=None):
-		"""Swap a node with its parent, keeping all child nodes
-		(and grandparent node) in order."""
-		if node == parent.left: 
-			parent.left = node.right
-			node.right = parent
-			if (self.root == parent):
-				self.root = node
-		elif node == parent.right:
-			parent.right = node.left
-			node.left = parent
-			if (self.root == parent):
-				self.root = node
+	# joins two trees s and t
+	def __join(self, s, t):
+		if s == None:
+			return t
+
+		if t == None:
+			return s
+
+		x = self.maximum(s)
+		self.__splay(x)
+		x.right = t
+		t.parent = x
+		return x
+
+	def __pre_order_helper(self, node):
+		if node != None:
+			sys.stdout.write(node.val + " ")
+			self.__pre_order_helper(node.left)
+			self.__pre_order_helper(node.right)
+
+	def __in_order_helper(self, node):
+		if node != None:
+			self.__in_order_helper(node.left)
+			sys.stdout.write(node.val + " ")
+			self.__in_order_helper(node.right)
+
+	def __post_order_helper(self, node):
+		if node != None:
+			self.__post_order_helper(node.left)
+			self.__post_order_helper(node.right)
+			sys.stdout.out.write(node.val + " ")
+
+	# Pre-Order traversal
+	# Node->Left Subtree->Right Subtree
+	def preorder(self):
+		self.__pre_order_helper(self.root)
+
+	# In-Order traversal
+	# Left Subtree -> Node -> Right Subtree
+	def inorder(self):
+		self.__in_order_helper(self.root)
+
+	# Post-Order traversal
+	# Left Subtree -> Right Subtree -> Node
+	def postorder(self):
+		self.__post_order_helper(self.root)
+
+	# search the tree for the key k
+	# and return the corresponding node
+	def search_tree(self, k):
+		x = self.searchTreeHelper(self.root, k)
+		if x != None:
+			self.__splay(x)
+
+	# find the node with the minimum key
+	def minimum(self, node):
+		while node.left != None:
+			node = node.left
+		return node
+
+	# find the node with the maximum key
+	def maximum(self, node):
+		while node.right != None:
+			node = node.right
+		return node
+
+	# find the successor of a given node
+	def successor(self, x):
+		# if the right subtree is not null,
+		# the successor is the leftmost node in the
+		# right subtree
+		if x.right != None:
+			return self.minimum(x.right)
+
+		# else it is the lowest ancestor of x whose
+		# left child is also an ancestor of x.
+		y = x.parent
+		while y != None and x == y.right:
+			x = y
+			y = y.parent
+		return y
+
+	# find the predecessor of a given node
+	def predecessor(self, x):
+		# if the left subtree is not null,
+		# the predecessor is the rightmost node in the 
+		# left subtree
+		if x.left != None:
+			return self.maximum(x.left)
+
+		y = x.parent
+		while y != None and x == y.left:
+			x = y
+			y = y.parent
+		return y
+
+	# insert the key to the tree in its appropriate position
+	def insert(self, key):
+		node =  SplayNode(key)
+		y = None
+		x = self.root
+
+		while x != None:
+			y = x
+			if node.val < x.val:
+				x = x.left
+			else:
+				x = x.right
+
+		# y is parent of x
+		node.parent = y
+		if y == None:
+			self.root = node
+		elif node.val < y.val:
+			y.left = node
 		else:
-			print("This is impossible")
+			y.right = node
+		# splay the node
+		self.__splay(node)
 
-		if (gp != None):
-			if (gp.right == parent):
-				gp.right = node
-			elif (gp.left == parent):
-				gp.left = node
+	# delete the node from the tree
+	def delete_node(self, data):
+		self.deleteNodeHelper(self.root, data)
 
-def test_splay_tree(treesize=100000, iters=20000):
-	"""Just a simple test harness to demonstrate the speed of
-	splay trees when a few items are searched for very frequently."""
-	# Build a binary tree and a splay tree
-	print("Building trees")
-	bintree = BinaryTree()
-	spltree = SplayTree()
-	x = [i for i in range(0, treesize)]
-	shuffle(x)
-	for n in x:
-		bintree.insert(n)
-		spltree.insert(n)
-	print("Done building")
-	searches = x[-20:]
+	# print the tree structure on the screen
+	def pretty_print(self):
+		self.__print_helper(self.root, "", True)
 
-	# Search the splay tree 1000 times
-	t1 = time.time()
-	for i in range(0, iters):
-		for n in searches:
-			node = spltree.search(n)
-			if (node == None):
-				print("ERROR: %d" % n)
-	t2 = time.time()
-	print("Searched for 20 items %dx in splay tree: %.1f sec" % (iters, t2-t1))
-
-	# Search the binary tree 1000 times
-	t1 = time.time()
-	for i in range(0, iters):
-		for n in searches:
-			node = bintree.search(n)
-			if (node == None):
-				print("ERROR: %d" % n)
-	t2 = time.time()
-	print("Searched for 20 items %dx in binary tree: %.1f sec" % (iters, t2-t1))
-
-test_splay_tree()
+if __name__ == '__main__':
+	tree = SplayTree()
+	tree.insert(33)
+	tree.insert(44)
+	tree.insert(67)
+	tree.insert(5)
+	tree.insert(89)
+	tree.insert(41)
+	tree.insert(98)
+	tree.insert(1)
+	tree.pretty_print()
+	tree.search_tree(33)
+	tree.search_tree(44)
+	tree.pretty_print()
+	tree.delete_node(89)
+	tree.delete_node(67)
+	tree.delete_node(41)
+	tree.delete_node(5)
+	tree.pretty_print()
+	tree.delete_node(98)
+	tree.delete_node(1)
+	tree.delete_node(44)
+	tree.delete_node(33)
+	tree.pretty_print()
