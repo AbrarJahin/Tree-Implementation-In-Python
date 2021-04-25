@@ -7,9 +7,6 @@ class SkipList:
 		self.len = 0
 		self.maxHeight = 0
 
-	def __len__(self):
-		return self.len
-
 	def find(self, elem, update = None):
 		if update == None:
 			update = self.updateList(elem)
@@ -19,7 +16,7 @@ class SkipList:
 				return item
 		return None
 
-	def contains(self, elem, update = None):
+	def isKeyExist(self, elem, update = None):
 		return self.find(elem, update) != None
 
 	def randomHeight(self):
@@ -49,7 +46,7 @@ class SkipList:
 				update[i].next[i] = _node
 			self.len += 1
 
-	def remove(self, elem):
+	def delete(self, elem):
 		update = self.updateList(elem)
 		x = self.find(elem, update)
 		if x != None:
@@ -66,3 +63,9 @@ class SkipList:
 	#			print x.next[i].elem,
 	#			x = x.next[i]
 	#		print ''
+
+	def __repr__(self) -> str:
+		return "SkipList Class"
+
+	def __str__(self) -> str:
+		return str(self.val) + "[" + str(self.left) + ", " + str(self.right) + "]"
