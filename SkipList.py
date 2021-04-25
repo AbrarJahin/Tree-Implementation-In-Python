@@ -60,4 +60,4 @@ class SkipList:
 		return "SkipList Class"
 
 	def __str__(self) -> str:
-		return "Len - " + str(self.len) + "\nMax Height - " + str(self.maxHeight) + "\nElements-\n" + str(self.head)
+		return "Len - " + str(self.len) + "\nMax Height - " + str(self.maxHeight) + "\nElements-\n" + self.head.next.__str__()

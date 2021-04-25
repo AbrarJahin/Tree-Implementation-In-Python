@@ -4,7 +4,13 @@ class SkipNode:
 		self.next = [None]*height
 
 	def __repr__(self) -> str:
-		return "SkipNode Class"
+		if self.val is None: return ""
+		output = self.val
+		if len(self.next)>0: output+=" -> "
+		for v in self.next:
+			if v:
+				output += str(v) + ", "
+		return output
 
 	def __str__(self) -> str:
 		if self.val is None: return ""
@@ -12,5 +18,5 @@ class SkipNode:
 		if len(self.next)>0: output+=" -> "
 		for v in self.next:
 			if v:
-				output += v + ", "
+				output += str(v) + ", "
 		return output
