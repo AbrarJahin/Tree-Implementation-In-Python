@@ -4,7 +4,7 @@ import time
 from HashTable import HashTable
 from BST import BST
 import SplayTree
-import SkipList
+from SkipList import SkipList
 from RedBlackTree import RedBlackTree
 
 def getInputFromFile(inputFileNameInSameDir: str):
@@ -22,9 +22,9 @@ def execute(selector: int, inputFileNameInSameDir: str):
 	elif selector == 1: #BST
 		dataStructure = BST()
 	elif selector == 2: #SplayTree
-		print('SplayTree')
+		dataStructure = SplayTree()
 	elif selector == 3: #SkipList
-		print("SkipList")
+		dataStructure = SkipList()
 	elif selector == 4: #RBTree
 		dataStructure = RedBlackTree()
 	executeWithData(dataStructure, data)
