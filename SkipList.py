@@ -12,7 +12,7 @@ class SkipList:
 			update = self.updateList(elem)
 		if len(update) > 0:
 			item = update[0].next[0]
-			if item != None and item.elem == elem:
+			if item != None and item.val == elem:
 				return item
 		return None
 
@@ -29,7 +29,7 @@ class SkipList:
 		update = [None]*self.maxHeight
 		x = self.head
 		for i in reversed(range(self.maxHeight)):
-			while x.next[i] != None and x.next[i].elem < elem:
+			while x.next[i] != None and x.next[i].val < elem:
 				x = x.next[i]
 			update[i] = x
 		return update
@@ -56,16 +56,8 @@ class SkipList:
 					self.maxHeight -= 1
 			self.len -= 1            
 
-	#def printList(self):
-	#	for i in range(len(self.head.next)-1, -1, -1):
-	#		x = self.head
-	#		while x.next[i] != None:
-	#			print x.next[i].elem,
-	#			x = x.next[i]
-	#		print ''
-
 	def __repr__(self) -> str:
 		return "SkipList Class"
 
 	def __str__(self) -> str:
-		return str(self.val) + "[" + str(self.left) + ", " + str(self.right) + "]"
+		return "Len - " + str(self.len) + "\nMax Height - " + str(self.maxHeight) + "\nElements-\n" + str(self.head)
