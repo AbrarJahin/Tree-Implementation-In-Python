@@ -38,9 +38,6 @@
     <Compile Include="HashTable.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RBTree_Old.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="SkipList.py">
       <SubType>Code</SubType>
     </Compile>

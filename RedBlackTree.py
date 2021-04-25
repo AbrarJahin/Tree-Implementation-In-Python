@@ -3,11 +3,18 @@ from RBTreeNode import RBTreeNode, Color
 
 class RedBlackTree():
 	def __init__(self):
-		self.TRootNull = RBTreeNode("Default Value that can't be given")
+		self.TRootNull = RBTreeNode(None)
 		self.TRootNull.color = Color.BLACK
 		self.TRootNull.left = None
 		self.TRootNull.right = None
 		self.root = self.TRootNull
+
+	# a method for printing data members
+	def __repr__(self) -> str:
+		return "RedBlackTree"
+
+	def __str__(self) -> str:
+		return str(self.root.val) + "[" + str(self.root.left) + ", " + str(self.root.right) + "]"
 
 	# Search the tree
 	def search(self, key: str) -> RBTreeNode:
