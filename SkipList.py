@@ -35,7 +35,7 @@ class SkipList:
 		self.maxHeight = max(self.maxHeight, len(nodeToInsert.next))
 		while len(self.head.next) < len(nodeToInsert.next):
 			self.head.next.append(None)
-		update = self.updateList(key)            
+		update = self.updateList(key)
 		if self.search(key, update) == None:
 			for i in range(len(nodeToInsert.next)):
 				nodeToInsert.next[i] = update[i].next[i]
