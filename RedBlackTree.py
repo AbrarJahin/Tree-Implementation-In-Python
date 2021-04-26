@@ -22,12 +22,9 @@ class RedBlackTree():
 	def search(self, key: str) -> RBTreeNode:
 		return self.searchTreeHelper(self.root, key)
 	def searchTreeHelper(self, node: RBTreeNode, key: str) -> RBTreeNode:
-		if node == self.TRootNull or key == node.val:
-			return node if node.val==key else None
-		elif key < node.val:
-			return self.searchTreeHelper(node.left, key)
-		else:
-			return self.searchTreeHelper(node.right, key)
+		if node == self.TRootNull or key == node.val: return node if node.val==key else None
+		elif key < node.val: return self.searchTreeHelper(node.left, key)
+		else: return self.searchTreeHelper(node.right, key)
 
 	def isKeyExist(self, key: str) -> bool:
 		return self.search(key) is not None
@@ -52,8 +49,7 @@ class RedBlackTree():
 			self.rbTransplant(z, z.left)
 		else:
 			y = self.findMinimum(z.right)
-			colorYPrev = y.color
-			x = y.right
+			colorYPrev, x = y.color, y.right
 			if y.parent == z: x.parent = y
 			else:
 				self.rbTransplant(y, y.right)
@@ -61,8 +57,7 @@ class RedBlackTree():
 				y.right.parent = y
 			self.rbTransplant(z, y)
 			y.left = z.left
-			y.left.parent = y
-			y.color = z.color
+			y.left.parent, y.color = y, z.color
 		if colorYPrev == Color.BLACK: self.deleteFixupSubroutine(x)
 
 	# Balancing the tree after deletion
@@ -71,29 +66,24 @@ class RedBlackTree():
 			if x == x.parent.left:
 				s = x.parent.right
 				if s.color == Color.RED:
-					s.color = Color.BLACK
-					x.parent.color = Color.RED
+					s.color, x.parent.color = Color.BLACK, Color.RED
 					self.leftRotate(x.parent)
 					s = x.parent.right
 				if s.left.color == Color.BLACK and s.right.color == Color.BLACK:
-					s.color = Color.RED
-					x = x.parent
+					s.color, x = Color.RED, x.parent
 				else:
 					if s.right.color == Color.BLACK:
 						s.left.color = Color.BLACK
 						s.color = Color.RED
 						self.rightRotate(s)
 						s = x.parent.right
-					s.color = x.parent.color
-					x.parent.color = Color.BLACK
-					s.right.color = Color.BLACK
+					s.color, s.right.color, x.parent.color = x.parent.color, Color.BLACK, Color.BLACK
 					self.leftRotate(x.parent)
 					x = self.root
 			else:
 				s = x.parent.left
 				if s.color == Color.RED:
-					s.color = Color.BLACK
-					x.parent.color = Color.RED
+					s.color, x.parent.color = Color.BLACK, Color.RED
 					self.rightRotate(x.parent)
 					s = x.parent.left
 				if s.right.color == Color.BLACK and s.right.color == Color.BLACK:
@@ -101,13 +91,11 @@ class RedBlackTree():
 					x = x.parent
 				else:
 					if s.left.color == Color.BLACK:
-						s.right.color = Color.BLACK
-						s.color = Color.RED
+						s.right.color, s.color = Color.BLACK, Color.RED
 						self.leftRotate(s)
 						s = x.parent.left
 					s.color = x.parent.color
-					x.parent.color = Color.BLACK
-					s.left.color = Color.BLACK
+					x.parent.color, s.left.color = Color.BLACK, Color.BLACK
 					self.rightRotate(x.parent)
 					x = self.root
 		x.color = Color.BLACK
