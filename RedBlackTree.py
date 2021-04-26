@@ -14,7 +14,9 @@ class RedBlackTree():
 		return "RedBlackTree"
 
 	def __str__(self) -> str:
-		return str(self.root.val) + " : " + str(self.root.color) + "[" + str(self.root.left) + ", " + str(self.root.right) + "]"
+		return str(self.root.val) + " : " + str(self.root.color)\
+				+ "[" + str(self.root.left) + " : " + str(self.root.left.color)\
+			    + ", " + str(self.root.right) + " : " + str(self.root.right.color) + "]"
 
 	# Search the tree
 	def search(self, key: str) -> RBTreeNode:
@@ -39,11 +41,9 @@ class RedBlackTree():
 			if node.val == key: z = node
 			if node.val <= key: node = node.right
 			else: node = node.left
-		if z == self.TRootNull:
-			print("Cannot find key in the tree")
-			return
+		if z == self.TRootNull: return #Key Not Found
 		y = z
-		y_original_color = y.color
+		colorYPrev = y.color
 		if z.left == self.TRootNull:
 			x = z.right
 			self.rbTransplant(z, z.right)
@@ -52,7 +52,7 @@ class RedBlackTree():
 			self.rbTransplant(z, z.left)
 		else:
 			y = self.findMinimum(z.right)
-			y_original_color = y.color
+			colorYPrev = y.color
 			x = y.right
 			if y.parent == z: x.parent = y
 			else:
@@ -63,7 +63,7 @@ class RedBlackTree():
 			y.left = z.left
 			y.left.parent = y
 			y.color = z.color
-		if y_original_color == Color.BLACK: self.deleteFixupSubroutine(x)
+		if colorYPrev == Color.BLACK: self.deleteFixupSubroutine(x)
 
 	# Balancing the tree after deletion
 	def deleteFixupSubroutine(self, x: RBTreeNode) -> None:

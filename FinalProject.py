@@ -16,7 +16,7 @@ def getInputFromFile(inputFileNameInSameDir: str):
 	return data
 
 def execute(selector: int, inputFileNameInSameDir: str):
-	selector, data, dataStructure = selector or 2, getInputFromFile(inputFileNameInSameDir or "input1.txt"), None
+	selector, data, dataStructure = selector or 4, getInputFromFile(inputFileNameInSameDir or "input1.txt"), None
 	if selector==0: #HashTable
 		dataStructure = HashTable()
 	elif selector == 1: #BST
