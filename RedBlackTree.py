@@ -14,7 +14,7 @@ class RedBlackTree():
 		return "RedBlackTree"
 
 	def __str__(self) -> str:
-		return str(self.root.val) + "[" + str(self.root.left) + ", " + str(self.root.right) + "]"
+		return str(self.root.val) + " : " + str(self.root.color) + "[" + str(self.root.left) + ", " + str(self.root.right) + "]"
 
 	# Search the tree
 	def search(self, key: str) -> RBTreeNode:
