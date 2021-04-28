@@ -3,11 +3,8 @@ from RBTreeNode import RBTreeNode, Color
 
 class RedBlackTree():
 	def __init__(self):
-		self.TRootNull = RBTreeNode(None)
-		self.TRootNull.color = Color.BLACK
-		self.TRootNull.left = None
-		self.TRootNull.right = None
-		self.root = self.TRootNull
+		self.pseudoRoot = RBTreeNode(None)
+		self.root = self.pseudoRoot
 
 	# a method for printing data members
 	def __repr__(self) -> str:
@@ -22,7 +19,7 @@ class RedBlackTree():
 	def search(self, key: str) -> RBTreeNode:
 		return self.searchTreeHelper(self.root, key)
 	def searchTreeHelper(self, node: RBTreeNode, key: str) -> RBTreeNode:
-		if node == self.TRootNull or key == node.val: return node if node.val==key else None
+		if node == self.pseudoRoot or key == node.val: return node if node.val==key else None
 		elif key < node.val: return self.searchTreeHelper(node.left, key)
 		else: return self.searchTreeHelper(node.right, key)
 
@@ -33,18 +30,18 @@ class RedBlackTree():
 	def delete(self, key: str) -> None:
 		self.deleteNodeHelper(self.root, key)
 	def deleteNodeHelper(self, node: RBTreeNode, key: str) -> None:
-		zNode = self.TRootNull
-		while node != self.TRootNull:
+		zNode = self.pseudoRoot
+		while node != self.pseudoRoot:
 			if node.val == key: zNode = node
 			if node.val <= key: node = node.right
 			else: node = node.left
-		if zNode == self.TRootNull: return #Key Not Found
+		if zNode == self.pseudoRoot: return #Key Not Found
 		yNode = zNode
 		colorYPrev = yNode.color
-		if zNode.left == self.TRootNull:
+		if zNode.left == self.pseudoRoot:
 			xNode = zNode.right
 			self.rbTransplant(zNode, zNode.right)
-		elif (zNode.right == self.TRootNull):
+		elif (zNode.right == self.pseudoRoot):
 			xNode = zNode.left
 			self.rbTransplant(zNode, zNode.left)
 		else:
@@ -109,12 +106,12 @@ class RedBlackTree():
 	# Node insert
 	def insert(self, key: str) -> None:
 		node = RBTreeNode(key)
-		node.left = self.TRootNull
-		node.right = self.TRootNull
+		node.left = self.pseudoRoot
+		node.right = self.pseudoRoot
 		node.color = Color.RED
 		yNode = None
 		xNode = self.root
-		while xNode != self.TRootNull:
+		while xNode != self.pseudoRoot:
 			yNode = xNode
 			if node.val < xNode.val: xNode = xNode.left
 			else: xNode = xNode.right
@@ -164,17 +161,17 @@ class RedBlackTree():
 		self.root.color = Color.BLACK
 
 	def findMinimum(self, node: RBTreeNode) -> RBTreeNode:
-		while node.left != self.TRootNull: node = node.left
+		while node.left != self.pseudoRoot: node = node.left
 		return node
 
 	def findMaximum(self, node: RBTreeNode) -> RBTreeNode:
-		while node.right != self.TRootNull: node = node.right
+		while node.right != self.pseudoRoot: node = node.right
 		return node
 
 	def leftRotate(self, xNode: RBTreeNode) -> None:
 		yNode = xNode.right
 		xNode.right = yNode.left
-		if yNode.left != self.TRootNull: yNode.left.parent = xNode
+		if yNode.left != self.pseudoRoot: yNode.left.parent = xNode
 		yNode.parent = xNode.parent
 		if xNode.parent == None: self.root = yNode
 		elif xNode == xNode.parent.left: xNode.parent.left = yNode
@@ -185,7 +182,7 @@ class RedBlackTree():
 	def rightRotate(self, xNode: RBTreeNode) -> None:
 		yNode = xNode.left
 		xNode.left = yNode.right
-		if yNode.right != self.TRootNull: yNode.right.parent = xNode
+		if yNode.right != self.pseudoRoot: yNode.right.parent = xNode
 		yNode.parent = xNode.parent
 		if xNode.parent == None: self.root = yNode
 		elif xNode == xNode.parent.right: xNode.parent.right = yNode
