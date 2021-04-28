@@ -32,8 +32,10 @@ class RedBlackTree():
 	def deleteNodeHelper(self, node: RBTreeNode, key: str) -> None:
 		zNode = self.pseudoRoot
 		while node != self.pseudoRoot:
-			if node.val == key: zNode = node
-			if node.val <= key: node = node.right
+			if node.val == key:
+				node = node.right
+				zNode = node
+			elif node.val < key: node = node.right
 			else: node = node.left
 		if zNode == self.pseudoRoot: return #Key Not Found
 		yNode = zNode
@@ -97,13 +99,13 @@ class RedBlackTree():
 					xNode = self.root
 		xNode.color = Color.BLACK
 
-	def rbTransplant(self, firstNode: RBTreeNode, secondNode: RBTreeNode) -> None:
-		if firstNode.parent == None: self.root = secondNode
-		elif firstNode == firstNode.parent.left: firstNode.parent.left = secondNode
-		else: firstNode.parent.right = secondNode
-		secondNode.parent = firstNode.parent
+	#Fixing delete Operation - If root is deleted
+	def rbTransplant(self, firstTree: RBTreeNode, secondTree: RBTreeNode) -> None:
+		if firstTree.parent == None: self.root = secondTree		#If No Parent
+		elif firstTree == firstTree.parent.left: firstTree.parent.left = secondTree	#If Comes from Left Side
+		else: firstTree.parent.right = secondTree	#If Comes from Right Side
+		secondTree.parent = firstTree.parent
 
-	# Node insert
 	def insert(self, key: str) -> None:
 		yNode, xNode = None, self.root
 		node = RBTreeNode(key, None, Color.RED, self.pseudoRoot, self.pseudoRoot)

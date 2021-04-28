@@ -54,7 +54,6 @@ if __name__ == "__main__":
 		except Exception as e:
 			selector = 0
 			inputFileNameInSameDir = "input1.txt"
-		
 	else:
 		selector = 0
 		inputFileNameInSameDir = "input1.txt"
