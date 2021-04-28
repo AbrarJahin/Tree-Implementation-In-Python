@@ -10,11 +10,12 @@ class TreeNode:
 	def __str__(self) -> str:
 		return str(self.val) + "[" + str(self.left) + ", " + str(self.right) + "]"
 
-	def getHeight(self, node: TreeNode)-> int:
-		if node is None: return 0
-		else: return max(height(node.left), height(node.right)) + 1
+	def getHeight(self)-> int:
+		if self.left is None and self.right is None: return 1
+		else: return max(self.left.getHeight(), self.right.getHeight()) + 1
 
-	def printTreeInorder(self, node):
-		if node.left is not None: printtree(node.left)
-		print(node.val + ", ")
-		if node.right is not None: printtree(node.right)
+	def printTreeInorder(self) -> None:
+		if self.val is None: return
+		if self.left is not None: self.left.printTreeInorder()
+		print(self.val + ", ")
+		if self.right is not None: self.right.printTreeInorder()

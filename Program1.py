@@ -33,6 +33,9 @@ def execute(selector: int, inputFileNameInSameDir: str):
 		print("Nothing is selected, so exiting")
 		return
 	executeWithData(dataStructure, data)
+	if selector == 1 or selector == 2 or selector == 4:
+		dataStructure.root.printTreeInorder()
+		print("\n-------------------\nSorted Order Print Done")
 	return dataStructure
 
 def executeWithData(modelObject, data):

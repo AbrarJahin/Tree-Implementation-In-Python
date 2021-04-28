@@ -32,10 +32,10 @@ def execute(selector: int, inputFileNameInSameDir: str):
 		print(selector)
 		print("Nothing is selected, so exiting")
 		return
-	executeWithData(dataStructure, data)
+	executeWithData(dataStructure, data, selector == 4)
 	return dataStructure
 
-def executeWithData(modelObject, data):
+def executeWithData(modelObject, data, isRbTree = False):
 	for (choice, key) in data:
 		if choice == 0:				#delete
 			modelObject.delete(key)
@@ -44,6 +44,11 @@ def executeWithData(modelObject, data):
 				modelObject.insert(key)
 			else:					# Not found, so insert the data
 				print("Searched and found key - " + key)
+		try:
+			height = modelObject.root.getHeight()
+			print("The height is : " + str(height-1 if isRbTree else height))
+		except Exception as e:
+			print("An exception occurred: ", e)
 
 if __name__ == "__main__":
 	start_time = time.time()
