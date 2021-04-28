@@ -105,12 +105,8 @@ class RedBlackTree():
 
 	# Node insert
 	def insert(self, key: str) -> None:
-		node = RBTreeNode(key)
-		node.left = self.pseudoRoot
-		node.right = self.pseudoRoot
-		node.color = Color.RED
-		yNode = None
-		xNode = self.root
+		yNode, xNode = None, self.root
+		node = RBTreeNode(key, None, Color.RED, self.pseudoRoot, self.pseudoRoot)
 		while xNode != self.pseudoRoot:
 			yNode = xNode
 			if node.val < xNode.val: xNode = xNode.left

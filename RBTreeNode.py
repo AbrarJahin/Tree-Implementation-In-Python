@@ -6,10 +6,10 @@ class Color(Enum):
 	BLACK = 0
 
 class RBTreeNode(TreeNode):
-	def __init__(self, val=0, nodeParent=None, nodeColor="black", left=None, right=None):  
+	def __init__(self, val=0, nodeParent=None, nodeColor=Color.BLACK, left=None, right=None):  
 		TreeNode.__init__(self, val, left, right)
-		self.color = Color.BLACK
-		self.parent = nodeParent
+		self.color = nodeColor
+		self.parent = nodeParent	# used for checking side of a node if it comes from left or right
 
 	def __repr__(self) -> str:
 		return "RBTreeNode Class"
