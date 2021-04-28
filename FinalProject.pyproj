@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>59d46090-e5cd-4f73-b331-d44cd058630c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>FinalProject.py</StartupFile>
+    <StartupFile>Program1.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,7 @@
     <Compile Include="BST.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Program2.py" />
     <Compile Include="RedBlackTree.py" />
     <Compile Include="RBTreeNode.py">
       <SubType>Code</SubType>
@@ -37,7 +38,7 @@
     <Compile Include="TreeNode.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FinalProject.py" />
+    <Compile Include="Program1.py" />
     <Compile Include="HashTable.py">
       <SubType>Code</SubType>
     </Compile>
