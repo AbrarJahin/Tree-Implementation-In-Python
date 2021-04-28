@@ -17,7 +17,7 @@ def getInputFromFile(inputFileNameInSameDir: str):
 
 def execute(selector: int, inputFileNameInSameDir: str):
 	selector, data, dataStructure = selector or 3, getInputFromFile(inputFileNameInSameDir or "input1.txt"), None
-	if selector==0: #HashTable
+	if selector == 0: #HashTable
 		dataStructure = HashTable()
 	elif selector == 1: #BST
 		dataStructure = BST()
@@ -27,6 +27,11 @@ def execute(selector: int, inputFileNameInSameDir: str):
 		dataStructure = SkipList()
 	elif selector == 4: #RBTree
 		dataStructure = RedBlackTree()
+	else:
+		print(selector == '0')
+		print(selector)
+		print("Nothing is selected, so exiting")
+		return
 	executeWithData(dataStructure, data)
 	return dataStructure
 
@@ -43,8 +48,13 @@ def executeWithData(modelObject, data):
 if __name__ == "__main__":
 	start_time = time.time()
 	if len(sys.argv)>1:
-		selector = sys.argv[1] or 0
-		inputFileNameInSameDir = sys.argv[2] or "input1.txt"
+		try:
+			selector = int(sys.argv[1])
+			inputFileNameInSameDir = sys.argv[2] or "input1.txt"
+		except Exception as e:
+			selector = 0
+			inputFileNameInSameDir = "input1.txt"
+		
 	else:
 		selector = 0
 		inputFileNameInSameDir = "input1.txt"
