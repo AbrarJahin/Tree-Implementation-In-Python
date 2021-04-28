@@ -127,33 +127,26 @@ class RedBlackTree():
 			if node.parent == node.parent.parent.right:
 				sibling = node.parent.parent.left
 				if sibling.color == Color.RED:
-					sibling.color = Color.BLACK
-					node.parent.color = Color.BLACK
-					node.parent.parent.color = Color.RED
+					sibling.color, node.parent.color, node.parent.parent.color = Color.BLACK, Color.BLACK, Color.RED
 					node = node.parent.parent
 				else:
 					if node == node.parent.left:
 						node = node.parent
 						self.rightRotate(node)
-					node.parent.color = Color.BLACK
-					node.parent.parent.color = Color.RED
+					node.parent.color, node.parent.parent.color = Color.BLACK, Color.RED
 					self.leftRotate(node.parent.parent)
 			else:
 				sibling = node.parent.parent.right
 				if sibling.color == Color.RED:
-					sibling.color = Color.BLACK
-					node.parent.color = Color.BLACK
-					node.parent.parent.color = Color.RED
+					sibling.color, node.parent.color, node.parent.parent.color = Color.BLACK, Color.BLACK, Color.RED
 					node = node.parent.parent
 				else:
 					if node == node.parent.right:
 						node = node.parent
 						self.leftRotate(node)
-					node.parent.color = Color.BLACK
-					node.parent.parent.color = Color.RED
+					node.parent.color, node.parent.parent.color = Color.BLACK, Color.RED
 					self.rightRotate(node.parent.parent)
-			if node == self.root:
-				break
+			if node == self.root: break
 		self.root.color = Color.BLACK
 
 	def findMinimum(self, node: RBTreeNode) -> RBTreeNode:
