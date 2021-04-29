@@ -47,7 +47,7 @@ def executeWithData(modelObject, data):
 			if not modelObject.isKeyExist(key):		# Not found, so insert
 				modelObject.insert(key)
 			else:					# Not found, so insert the data
-				print("Searched and found key - " + key)
+				print("Searched and found key - " + key + ", so nothing inserted")
 
 if __name__ == "__main__":
 	start_time = time.time()
