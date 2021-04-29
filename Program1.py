@@ -16,7 +16,7 @@ def getInputFromFile(inputFileNameInSameDir: str):
 	return data
 
 def execute(selector: int, inputFileNameInSameDir: str):
-	selector, data, dataStructure = selector, getInputFromFile(inputFileNameInSameDir or "input1.txt"), None
+	selector, data, dataStructure = selector, getInputFromFile(inputFileNameInSameDir), None
 	if selector == 0: #HashTable
 		dataStructure = HashTable()
 	elif selector == 1: #BST
@@ -34,7 +34,8 @@ def execute(selector: int, inputFileNameInSameDir: str):
 		return
 	executeWithData(dataStructure, data)
 	if selector == 1 or selector == 2 or selector == 4:
-		dataStructure.root.printTreeInorder()
+		#dataStructure.root.printTreeInorder()
+		dataStructure.root.indentPrint()
 		print("\n-------------------\nSorted Order Print Done")
 	return dataStructure
 
@@ -53,9 +54,10 @@ if __name__ == "__main__":
 	if len(sys.argv)>1:
 		try:
 			selector = int(sys.argv[1])
-			inputFileNameInSameDir = sys.argv[2] or "input1.txt"
+			inputFileNameInSameDir = sys.argv[2]
 		except Exception as e:
-			selector = 0
+			print("CMD Argument read error, so default value shown")
+			selector = 4
 			inputFileNameInSameDir = "input1.txt"
 	else:
 		selector = 0
