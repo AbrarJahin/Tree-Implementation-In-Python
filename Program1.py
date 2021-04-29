@@ -34,9 +34,12 @@ def execute(selector: int, inputFileNameInSameDir: str):
 		return
 	executeWithData(dataStructure, data)
 	if selector == 1 or selector == 2 or selector == 4:
-		#dataStructure.root.printTreeInorder()
+		print("\n-------------------\nSorted Order Print Init\n")
+		dataStructure.root.printTreeInorder()
+		print("\n\n-------------------\nSorted Order Print Done")
+		print("\n\n-------------------\nPrint In Tree View")
 		dataStructure.root.indentPrint()
-		print("\n-------------------\nSorted Order Print Done")
+		print("\n\n-------------------\nPrint In Data Structure View")
 	return dataStructure
 
 def executeWithData(modelObject, data):
@@ -60,7 +63,7 @@ if __name__ == "__main__":
 			selector = 4
 			inputFileNameInSameDir = "input1.txt"
 	else:
-		selector = 0
+		selector = 4
 		inputFileNameInSameDir = "input1.txt"
 	print(execute(selector,inputFileNameInSameDir))
 	print("Time: ", time.time() - start_time)

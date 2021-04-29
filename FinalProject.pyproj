@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>59d46090-e5cd-4f73-b331-d44cd058630c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Program1.py</StartupFile>
+    <StartupFile>Program2.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
