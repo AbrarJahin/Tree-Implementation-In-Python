@@ -1,3 +1,8 @@
-SplayTree Imported
-SkipList Imported
-RB Tree Imported
+apple ipod, 
+cordless phones, 
+t60 laptop adaptor, 
+
+-------------------
+Sorted Order Print Done
+cordless phones : Color.BLACK[apple ipod[None[None, None], None[None, None]] : Color.BLACK, t60 laptop adaptor[None[None, None], None[None, None]] : Color.BLACK]
+Time:  0.000522613525390625
